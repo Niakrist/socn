@@ -1,15 +1,10 @@
-import React, { useState } from "react";
+import React from "react";
 import "bootstrap/dist/css/bootstrap.css";
-import api from "../api";
+import User from "./User";
+import SearchStatus from "./SearchStatus";
 
-const Users = () => {
 
-  const [users, setUsers] = useState(api.users.fetchAll());
-
-  const handleDelete = (id) => {
-    // setUsers(prev => prev.filter(user => user._id !== id));
-    setUsers(users.filter(user => user._id !== id));
-  }
+const Users = ( {handleDelete, users, handleChangeBookmark }) => {
 
   const renderPhrase = (number) => {
     if (number > 4 && number < 15) return "Человек тусанёт";
@@ -20,9 +15,7 @@ const Users = () => {
   }
   return (
     <>
-      {users.length > 0
-        ? <span className="badge m-1 bg-primary"> {users.length} {renderPhrase(users.length)} с тобой сегодня</span>
-        : <span className="badge m-1 bg-danger">Сегодня тусуешь один</span>}
+      {<SearchStatus users={users} renderPhrase={renderPhrase}/>}
 
       {users.length > 0 &&
         <table className="table">
@@ -39,15 +32,7 @@ const Users = () => {
           </thead>
           <tbody>
             {users.map(user => (
-              <tr key={user._id}>
-                <td>{user.name}</td>
-                <td>{user.qualities.map(qualitie => <span key={qualitie._id} className={`badge m-1 bg-${qualitie.color}`}>{qualitie.name}</span>)}</td>
-                <td>{user.profession.name}</td>
-                <td>{user.completedMeetings}</td>
-                <td>{user.rate}</td>
-                <td>{user.nabookmarke}+/-</td>
-                <td><button onClick={() => handleDelete(user._id)} className="btn btn-danger">delete</button></td>
-              </tr>
+              <User key={user._id} user={user} handleDelete={handleDelete} handleChangeBookmark={handleChangeBookmark} />
             ))}
           </tbody>
         </table>}
