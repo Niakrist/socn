@@ -7,24 +7,23 @@ function App() {
 
   const handleDelete = (id) => {
     // setUsers(prev => prev.filter(user => user._id !== id));
-    setUsers(users.filter(user => user._id !== id));
-  }
+    setUsers(users.filter((user) => user._id !== id));
+  };
 
   const handleChangeBookmark = (id) => {
-    console.log(id)
     const copyUsers = [...users];
-    const indexId = users.findIndex(user => user._id === id);
-    console.log('indexId', indexId)
-    console.log('copyUsers', copyUsers[indexId])
+    const indexId = users.findIndex((user) => user._id === id);
     copyUsers[indexId].bookmark = !copyUsers[indexId].bookmark;
-    setUsers(copyUsers)
-
-
-  }
+    setUsers(copyUsers);
+  };
 
   return (
     <div>
-      <Users users={users} handleDelete={handleDelete} handleChangeBookmark={handleChangeBookmark} />
+      <Users
+        users={users}
+        handleDelete={handleDelete}
+        handleChangeBookmark={handleChangeBookmark}
+      />
     </div>
   );
 }
